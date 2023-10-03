@@ -1,6 +1,6 @@
 
 //import 'bootstrap';
-//import "./check.css"
+import "./check.css"
 import "../node_modules/bootstrap/dist/css/bootstrap.css"
 import "../node_modules/bootstrap/dist/js/bootstrap.js"
 
@@ -195,13 +195,13 @@ const CreateContainerListAccordion = (props) =>{
         
     let acc, container; // запоминаем "аккордион", чтобы в случае нажатия кнопки для сортировки очистить его и отрисовать отсортированным.
                         // контейнер запоминаем для того, чтобы добавлять строки и столбцы
-    let row_first = create_row("row gy-2"), row_second = create_row("row RowMax")
+    let row_first = create_row("row gy-2"), row_second = create_row("row Scroll")
 
     acc = document.createElement("div");
     container = document.createElement("div");
-    acc.className = "accordion Scroll";    
+    acc.className = "accordion";    
     acc.id = "accordionExample";
-    container.className = "container Main";
+    container.className = "container";
 
     document.body.appendChild(container);
 
