@@ -1,5 +1,6 @@
 
 //import 'bootstrap';
+//import "./check.css"
 import "../node_modules/bootstrap/dist/css/bootstrap.css"
 import "../node_modules/bootstrap/dist/js/bootstrap.js"
 
@@ -31,7 +32,29 @@ let state = {
             flag : 1,
             info : "About SomethingFour\nABOBA asdasdasadasdaadsssssssss dasdasdasdasdsadadasdad dasdsdas asdasdasdasdasdasdasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
             id : 3,
-        }
+        },
+        {
+            name : "FBACD",
+            link : "#a",
+            flag : 3,
+            info : "About SomethingThree",
+            id : 4,
+        },
+        {
+            name : "KACD",
+            link : "#a",
+            flag : 3,
+            info : "About SomethingThree",
+            id : 5,
+        },
+        {
+            name : "ZACD",
+            link : "#a",
+            flag : 1,
+            info : "About SomethingThree",
+            id : 6,
+        },
+
     ],
     sortedFlag : false,
     sortedAlpha : false
@@ -172,13 +195,13 @@ const CreateContainerListAccordion = (props) =>{
         
     let acc, container; // запоминаем "аккордион", чтобы в случае нажатия кнопки для сортировки очистить его и отрисовать отсортированным.
                         // контейнер запоминаем для того, чтобы добавлять строки и столбцы
-    let row_first = create_row("row gy-2"), row_second = create_row("row")
+    let row_first = create_row("row gy-2"), row_second = create_row("row RowMax")
 
     acc = document.createElement("div");
     container = document.createElement("div");
-    acc.className = "accordion";    
+    acc.className = "accordion Scroll";    
     acc.id = "accordionExample";
-    container.className = "container";
+    container.className = "container Main";
 
     document.body.appendChild(container);
 

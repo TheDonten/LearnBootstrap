@@ -1,7 +1,21 @@
-h1{
-    color : aquamarine;
-}
+body{
+    height: 100vh;
+    width: 100vw;
 
-.container{
-    background-color: red;
 }
+.Main{
+    height: 100vh;
+    overflow: auto;
+}
+/*.RowMax{
+    height: 100%;
+}*/
+.Scroll{
+    height: 90%;
+    overflow-y: auto;
+}
+/*.maxSize{
+    height: 90%;
+    overflow-y: auto;
+}
+*/
