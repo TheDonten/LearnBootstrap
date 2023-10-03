@@ -3,49 +3,111 @@
 import "../node_modules/bootstrap/dist/css/bootstrap.css"
 import "../node_modules/bootstrap/dist/js/bootstrap.js"
 
-const userStack = {
-    language : "JavaScript",
-    framework : "Angular"
-}
-
-const user = {
-    name : "Tema",
-    age : "20",
-    ...userStack
-}
-
 let state = {
     Data : [ {
-            name : "SomethingOne",
+            name : "DBCA",
             link : "#a",
             flag : 2,
             info : "About SomethingOne",
             id : 0,
         },
         {
-            name : "SomethingTwo",
+            name : "CDBA",
             link : "#a",
             flag : 0,
             info : "About SomethingTwo",
             id : 1,
         },
         {
-            name : "SomethingThree",
+            name : "BACD",
             link : "#a",
             flag : 3,
             info : "About SomethingThree",
             id : 2,
         },
         {
-            name : "SomethingFour",
+            name : "ABCD",
             link : "#a",
             flag : 1,
-            info : "About SomethingFour",
+            info : "About SomethingFour\nABOBA asdasdasadasdaadsssssssss dasdasdasdasdsadadasdad dasdsdas asdasdasdasdasdasdasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
             id : 3,
         }
     ],
-    sorted : false,
+    sortedFlag : false,
+    sortedAlpha : false
     //something more
+}
+
+const create_button = (ClassName, type, Function,text) =>{
+    let button = document.createElement("button");
+    button.type = type;
+    button.className = ClassName;
+    button.onclick = Function;
+  
+    button.innerHTML = text;
+    return button;
+}
+
+const create_column = (ClassName) =>{
+    let column = document.createElement("div");
+    column.className = ClassName;
+    return column;
+}
+
+const create_row = (ClassName) =>{
+    let row = document.createElement("div");
+    row.className = ClassName;
+    return row;
+}
+                
+const SortedFlagAccordion = (Accordion, props) =>{
+    if(props.sortedFlag)
+        return;
+    Accordion.innerHTML = '';
+    props.sortedFlag = true;
+    props.sortedAlpha = false;
+    props.Data.sort( (a,b) => a.flag-b.flag);
+    CreateListAccordion(Accordion, props);
+}
+
+const SortedAlhpavitAccordion = (Accordion, props) =>{
+    if(props.sortedAlpha)
+    return;
+    Accordion.innerHTML = '';
+    props.sortedFlag = false;
+    props.sortedAlpha = true;
+    props.Data.sort( (a,b) =>{
+        if(a.name.toUpperCase() < b.name.toUpperCase())
+            return -1;
+        else
+            return 1;
+    })
+    CreateListAccordion(Accordion, props);
+}
+
+const AddNewColumnToRow = (row, data, text) => {
+    let column = create_column(text);
+    column.appendChild(data);
+    row.appendChild(column);
+    return row;
+}
+const AddColumnToRow = (row, column) =>{
+    row.appendChild(column);
+    return row;
+}
+
+const CreateListAccordion = (Accordion, props) =>{
+    props.Data.map( (el) => {
+        Accordion.appendChild(CreateAccordion_Item(el));
+    })
+}
+
+const newTab = (Link) =>{
+    return () => {
+        window.open(
+            Link, '_blank'
+        );
+    };
 }
 
 const CreateAccordion_Item = (props) =>{
@@ -78,66 +140,39 @@ const CreateAccordion_Item = (props) =>{
     div_me_collapse.setAttribute('aria-labelledby', `heading${props.id}`);
     div_me_collapse.setAttribute('data-bs-parent','#accordionExample');
 
+    let div_me_collapse_container = document.createElement("div");
+    div_me_collapse_container.className = "container";
+
+
     let div_me_collapse_son = document.createElement('div');
     div_me_collapse_son.className = "accordion-body";
     div_me_collapse_son.innerHTML =  props.info; 
+
+
+    div_me_collapse_container.appendChild(AddNewColumnToRow(create_row("row"), div_me_collapse_son, "col-auto"));
+  
+
+    let button = create_button("btn btn-primary", "button", newTab("https://google.com"), "Link") //В функцию newTab можно передвать линки с пропса
     
-    div_me_collapse.appendChild(div_me_collapse_son);
+    div_me_collapse_container.appendChild( AddNewColumnToRow(create_row("row"), button, "pb-2 col-auto"));
+
+    
+    div_me_collapse.appendChild(div_me_collapse_container);
 
     div_me.appendChild(h2_me);
     div_me.appendChild(div_me_collapse);
+
+
 
     return div_me;
 }
 
 
-const create_button = (ClassName, type, Function,text) =>{
-    let button = document.createElement("button");
-    button.type = type;
-    button.className = ClassName;
-    button.onclick = Function;
-  
-    button.innerHTML = text;
-    return button;
-}
-
-const create_column = (ClassName) =>{
-    let column = document.createElement("div");
-    column.className = ClassName;
-    return column;
-}
-
-const create_row = (ClassName) =>{
-    let row = document.createElement("div");
-    row.className = ClassName;
-    return row;
-}
-                
-const SortedAccordion = (Accordion, props) =>{
-    if(props.sorted)
-        return;
-    Accordion.innerHTML = '';
-    props.sorted = true;
-    console.log(props);
-    props.Data.sort( (a,b) => a.flag-b.flag);
-    console.log(props);
-    CreateListAccordion(Accordion, props)
-    //sort data props
-    //CreateListAccordion(A)
-}
-
-
-const CreateListAccordion = (Accordion, props) =>{
-    props.Data.map( (el) => {
-        Accordion.appendChild(CreateAccordion_Item(el));
-    })
-}
 const CreateContainerListAccordion = (props) =>{
         
     let acc, container; // запоминаем "аккордион", чтобы в случае нажатия кнопки для сортировки очистить его и отрисовать отсортированным.
                         // контейнер запоминаем для того, чтобы добавлять строки и столбцы
-    let row_first = create_row("row gy-2"), column_first_1 = create_column("col-auto"), column_first_2 = create_column("col-auto"),
-    row_second = create_row("row"), column_second_1 = create_column("col-12");
+    let row_first = create_row("row gy-2"), row_second = create_row("row")
 
     acc = document.createElement("div");
     container = document.createElement("div");
@@ -146,24 +181,20 @@ const CreateContainerListAccordion = (props) =>{
     container.className = "container";
 
     document.body.appendChild(container);
-    //document.body.appendChild(acc);
 
-    let button1 = create_button("btn btn-primary", "button", () => {SortedAccordion(acc,props)}, "Сортировка по важности");
-    let button2 = create_button("btn btn-primary", "button", () => {SortedAccordion(acc,props)}, "Сортировка по алфавиту");
+
+    let button1 = create_button("btn btn-primary", "button", () => {SortedFlagAccordion(acc,props)}, "Сортировка по важности");
+    let button2 = create_button("btn btn-primary", "button", () => {SortedAlhpavitAccordion(acc,props)}, "Сортировка по алфавиту");
 
 
     CreateListAccordion(acc,props);
 
     container.appendChild(row_first);
-    row_first.appendChild(column_first_1);
-    row_first.appendChild(column_first_2);
-    column_first_1.appendChild(button1);
-    column_first_2.appendChild(button2);
+    AddNewColumnToRow(row_first, button1, "col-auto");
+    AddNewColumnToRow(row_first, button2, "col-auto");
 
     container.appendChild(row_second);
-    row_second.appendChild(column_second_1);
-    column_second_1.appendChild(acc);
-
+    AddNewColumnToRow(row_second, acc, "col-12");
 }
 
 CreateContainerListAccordion(state);
