@@ -79,7 +79,7 @@ const Create_InputText = (ClassName, type, placeholder, id, Function) =>{
     input.id = id;
     //input.addEventListener('input', () => {console.log(input.value)});
     input.addEventListener('input', () => {Function(input.value)});
-    input.setAttribute('aria-label', 'Username');
+    input.setAttribute('aria-label', 'Search');
     input.setAttribute('aria-describedby','basic-addon1');
     div_main.appendChild(input);
 
@@ -88,15 +88,15 @@ const Create_InputText = (ClassName, type, placeholder, id, Function) =>{
 
 
 const FilterByText = (Accordion, props,text) =>{
-    
+    Accordion.innerHTML = '';
     if(text === ""){
         CreateListAccordion(Accordion, props);
         return;
     }
-    Accordion.innerHTML = '';
+    //Accordion.innerHTML = '';
     let new_Data = props.Data.filter( (el) => {
         let temp = el.name.slice(0, text.length);
-        if(temp === text)
+        if(temp.toUpperCase() === text.toUpperCase())
             return true;
         else
             return false;
