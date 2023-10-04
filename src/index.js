@@ -54,11 +54,56 @@ let state = {
             info : "About SomethingThree",
             id : 6,
         },
+        {
+            name : "ABKD",
+            link : "#a",
+            flag : 2,
+            info : "About SomethingFour\nABOBA asdasdasadasdaadsssssssss dasdasdasdasdsadadasdad dasdsdas asdasdasdasdasdasdasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            id : 7,
+        }
 
     ],
     sortedFlag : false,
     sortedAlpha : false
     //something more
+}
+
+const Create_InputText = (ClassName, type, placeholder, id, Function) =>{
+    let div_main = document.createElement("div");
+    let input = document.createElement("input");
+    div_main.className = "input-group mt-2 mb-2";
+
+    input.className = ClassName;
+    input.type = type;
+    input.placeholder = placeholder;
+    input.id = id;
+    //input.addEventListener('input', () => {console.log(input.value)});
+    input.addEventListener('input', () => {Function(input.value)});
+    input.setAttribute('aria-label', 'Username');
+    input.setAttribute('aria-describedby','basic-addon1');
+    div_main.appendChild(input);
+
+    return div_main;
+}
+
+
+const FilterByText = (Accordion, props,text) =>{
+    
+    if(text === ""){
+        CreateListAccordion(Accordion, props);
+        return;
+    }
+    Accordion.innerHTML = '';
+    let new_Data = props.Data.filter( (el) => {
+        let temp = el.name.slice(0, text.length);
+        if(temp === text)
+            return true;
+        else
+            return false;
+    })
+    console.log(new_Data);
+    console.log(text);
+    CreateListAccordion(Accordion, {...props, Data : new_Data});
 }
 
 const create_button = (ClassName, type, Function,text) =>{
@@ -87,6 +132,8 @@ const SortedFlagAccordion = (Accordion, props) =>{
     if(props.sortedFlag)
         return;
     Accordion.innerHTML = '';
+    let textInput = document.getElementById("InputSearch");
+    textInput.value = "";
     props.sortedFlag = true;
     props.sortedAlpha = false;
     props.Data.sort( (a,b) => a.flag-b.flag);
@@ -97,6 +144,8 @@ const SortedAlhpavitAccordion = (Accordion, props) =>{
     if(props.sortedAlpha)
     return;
     Accordion.innerHTML = '';
+    let textInput = document.getElementById("InputSearch");
+    textInput.value = "";
     props.sortedFlag = false;
     props.sortedAlpha = true;
     props.Data.sort( (a,b) =>{
@@ -152,7 +201,7 @@ const CreateAccordion_Item = (props) =>{
     h2_me_button.setAttribute('data-bs-target',`#collapse${props.id}`);
     h2_me_button.setAttribute('aria-expanded','false');
     h2_me_button.setAttribute('aria-controls',`#collapse${props.id}`);
-    h2_me_button.innerHTML = `${props.name} ${props.id}`;
+    h2_me_button.innerHTML = `${props.name}`;
     h2_me_button.style.background = colors[props.flag];
     h2_me.appendChild(h2_me_button);
 
@@ -206,15 +255,16 @@ const CreateContainerListAccordion = (props) =>{
     document.body.appendChild(container);
 
 
-    let button1 = create_button("btn btn-primary", "button", () => {SortedFlagAccordion(acc,props)}, "Сортировка по важности");
-    let button2 = create_button("btn btn-primary", "button", () => {SortedAlhpavitAccordion(acc,props)}, "Сортировка по алфавиту");
-
+    let button1 = create_button("btn btn-primary mt-2 mb-2", "button", () => {SortedFlagAccordion(acc,props)}, "Сортировка по важности");
+    let button2 = create_button("btn btn-primary mt-2 mb-2", "button", () => {SortedAlhpavitAccordion(acc,props)}, "Сортировка по алфавиту");
+    let inputText = Create_InputText("form-control", "text", "Поиск", "InputSearch", (text) => {FilterByText(acc, props,text)});
 
     CreateListAccordion(acc,props);
 
     container.appendChild(row_first);
     AddNewColumnToRow(row_first, button1, "col-auto");
     AddNewColumnToRow(row_first, button2, "col-auto");
+    AddNewColumnToRow(row_first, inputText,"col");
 
     container.appendChild(row_second);
     AddNewColumnToRow(row_second, acc, "col-12");
