@@ -1,0 +1,15 @@
+
+.Scroll{
+    max-height: 600px;
+    overflow: auto;
+    border-top: 1px black solid;
+    white-space: nowrap;
+    min-width: 83px;
+    padding-left: 12px;
+}
+
+/*.maxSize{
+    height: 90%;
+    overflow-y: auto;
+}
+*/
