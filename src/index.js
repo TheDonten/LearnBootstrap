@@ -95,9 +95,9 @@ const create_table_body = (el) =>{
     return tr;
 }
 
-const sort_props = (div,obj_me) =>{
+const sort_props = (elem,obj_me) =>{
     debugger
-    div.innerHTML = '';
+    elem.innerHTML = '';
     let array = {};
     if(!state_sort){
         array = obj_me.Data.sort( (a,b) => {return a.id - b.id})
@@ -107,9 +107,10 @@ const sort_props = (div,obj_me) =>{
         array = obj_me.Data.sort( (a,b) => {return b.id - a.id})
         state_sort = false;
     }
-    div.appendChild(create_table_main({...obj_me, Data : array}));
-    let element_click = document.getElementById("event_click")
-    element_click.addEventListener('click', () => {sort_props(div,obj)})
+    //elem.appendChild(create_table_main({...obj_me, Data : array}));
+    array.map( (el) =>{
+        elem.appendChild(create_table_body(el))
+    })
 }
 
 const create_thead = () =>{
@@ -197,13 +198,30 @@ const create_table_main = (props) =>{
         tbody.appendChild(create_table_body(el))
     })
     
-    return table;
+    return [table, tbody];
 }
 
-let div = document.createElement("div");
-div.style = "margin-right: 10px; margin-left: 10px; margin-top: 10px";
-div.id = "div_main";
-div.appendChild(create_table_main(obj));
-document.body.appendChild(div);
-let element_click = document.getElementById("event_click")          //мех
-element_click.addEventListener('click', () => {sort_props(div,obj)})
+const addlistenEvent = (obj_me,tbody) =>{
+    let event = document.getElementById("event_click");
+
+    event.addEventListener('click', () =>{sort_props(tbody,obj_me)})
+}
+
+const init_table = (obj_me) =>{
+    let div = document.createElement("div");
+    div.style = "margin-right: 10px; margin-left: 10px; margin-top: 10px";
+    div.id = "div_main";
+    let [table,tbody] = create_table_main(obj_me);
+    div.appendChild(table);
+    document.body.appendChild(div);
+    addlistenEvent(obj_me,tbody);
+}
+
+init_table(obj);
+// let div = document.createElement("div");
+// div.style = "margin-right: 10px; margin-left: 10px; margin-top: 10px";
+// div.id = "div_main";
+// div.appendChild(create_table_main(obj));
+// document.body.appendChild(div);
+// let element_click = document.getElementById("event_click")          //мех
+// element_click.addEventListener('click', () => {sort_props(div,obj)})
