@@ -7,6 +7,11 @@
     min-width: 83px;
     padding-left: 12px;
 }
+.me{
+   width: 700px;
+    max-height: 400px;
+    overflow-y: auto;
+}
 
 /*.maxSize{
     height: 90%;
