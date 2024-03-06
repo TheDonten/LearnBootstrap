@@ -3,7 +3,11 @@
 import "./check.css"
 import "../node_modules/bootstrap/dist/css/bootstrap.css"
 import "../node_modules/bootstrap/dist/js/bootstrap.js"
+<<<<<<< HEAD
 //Da lando
+=======
+//aboba
+>>>>>>> 92dbbb85bd4311cb01b3d595ec74ea5dda1c47b4
 let state = {
     Data : [ {
             name : "DBCA",
