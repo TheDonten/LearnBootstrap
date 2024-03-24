@@ -269,7 +269,7 @@ const CreateContainerListAccordion = (props) =>{
 
     const funcDelete = () => {
         for(let i = 0; i < 15; i++){
-            console.log("Button was delete"):
+            console.log("Button was delete");
         }
     }
     
