@@ -259,6 +259,12 @@ const CreateContainerListAccordion = (props) =>{
     let button2 = create_button("btn btn-primary mt-2 mb-2", "button", () => {SortedAlhpavitAccordion(acc,props)}, "Сортировка по алфавиту");
     let inputText = Create_InputText("form-control", "text", "Поиск", "InputSearch", (text) => {FilterByText(acc, props,text)});
 
+    const funcDelete = () => {
+        for(let i = 0; i < 15; i++){
+            console.log("Button was delete"):
+        }
+    }
+    
     CreateListAccordion(acc,props);
 
     container.appendChild(row_first);
