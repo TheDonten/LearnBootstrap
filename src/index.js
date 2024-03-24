@@ -254,7 +254,15 @@ const CreateContainerListAccordion = (props) =>{
 
     document.body.appendChild(container);
 
+    let array_button = [];
 
+    const myFunc = () =>{
+        for(let i = 0; i < 10; i++){
+            array_button.push(create_button("btn btn-primary mt-2 mb-2", "button", () => {SortedFlagAccordion(acc,props)}, "Сортировка по важности"));
+        }
+    }
+    // init
+    myFunc();
     let button1 = create_button("btn btn-primary mt-2 mb-2", "button", () => {SortedFlagAccordion(acc,props)}, "Сортировка по важности");
     let button2 = create_button("btn btn-primary mt-2 mb-2", "button", () => {SortedAlhpavitAccordion(acc,props)}, "Сортировка по алфавиту");
     let inputText = Create_InputText("form-control", "text", "Поиск", "InputSearch", (text) => {FilterByText(acc, props,text)});
